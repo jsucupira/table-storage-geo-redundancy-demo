@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
 using System.Runtime.Caching;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 
 namespace Core.Configuration
 {
@@ -9,9 +12,25 @@ namespace Core.Configuration
     {
         private static readonly ObjectCache _cache = MemoryCache.Default;
 
-        public static ConfigurationItems GetAll()
+        public static List<ConfigurationItem> GetAll()
         {
-            return ConfigurationContextFactory.Create().GetAll();
+            List<ConfigurationItem> items;
+            if (_cache.Any())
+            {
+                items = _cache.Select(t => new ConfigurationItem
+                {
+                    Key = t.Key,
+                    Value = t.Value.ToString()
+                }).ToList();
+                return items;
+            }
+
+            items = ConfigurationContextFactory.Create().GetAll();
+
+            foreach (ConfigurationItem configurationItem in items)
+                SetCache(configurationItem.Key, configurationItem.Value);
+
+            return items;
         }
 
         public static bool GetBooleanSetting(string settingKey)
@@ -45,7 +64,18 @@ namespace Core.Configuration
             throw new Exception(string.Format("Could not convert Configuration item '{0}' ({1}) to Integer.", settingKey, rawValue));
         }
 
-        public static string GetSetting(string settingKey)
+        public static string GetLocalConnectionString(string key)
+        {
+            string connection = CloudConfigurationManager.GetSetting(key);
+            if (string.IsNullOrEmpty(connection))
+                connection = ConfigurationManager.AppSettings[key];
+            if (string.IsNullOrEmpty(connection))
+                connection = ConfigurationManager.ConnectionStrings[key].ConnectionString;
+
+            return connection;
+        }
+
+        public static string GetSetting(string settingKey, string defaultValue = null)
         {
             string cacheKey = settingKey;
             string value = _cache.Get(cacheKey) as string;
@@ -55,20 +85,17 @@ namespace Core.Configuration
             IConfigurationContext context = ConfigurationContextFactory.Create();
             ConfigurationItem item = context.GetItem(settingKey);
             if (item == null)
-                throw new Exception(string.Format("Configuration Setting '{0}' not found.", settingKey));
+            {
+                if (string.IsNullOrEmpty(defaultValue))
+                    throw new Exception(string.Format("Configuration Setting '{0}' not found.", settingKey));
+                else
+                    return defaultValue;
+            }
 
             SetCache(cacheKey, item.Value);
 
             return item.Value;
         }
-
-        public static TimeSpan GetTimeSpanSetting(string settingKey)
-        {
-            string setting = GetSetting(settingKey);
-            return TimeSpan.Parse(setting);
-        }
-
-        #region Caching
 
         public static void RefreshCache()
         {
@@ -79,8 +106,6 @@ namespace Core.Configuration
             });
         }
 
-        #endregion
-
         public static void SaveSetting(string key, string value)
         {
             IConfigurationContext context = ConfigurationContextFactory.Create();
@@ -90,8 +115,8 @@ namespace Core.Configuration
 
         private static void SetCache(string key, object value)
         {
-            DateTimeOffset dateTime = DateTimeOffset.Now.AddMinutes(30);
-            _cache.Set(key, value, new CacheItemPolicy {AbsoluteExpiration = dateTime});
+            DateTimeOffset dateTime = DateTimeOffset.Now.AddMinutes(15);
+            _cache.Set(key, value, new CacheItemPolicy { AbsoluteExpiration = dateTime });
         }
     }
 }

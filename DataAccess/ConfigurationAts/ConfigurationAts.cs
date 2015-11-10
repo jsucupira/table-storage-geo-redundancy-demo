@@ -1,6 +1,6 @@
 ﻿using Microsoft.WindowsAzure.Storage.Table;
 
-namespace DataAccess
+namespace DataAccess.ConfigurationAts
 {
     public class ConfigurationAts : TableEntity
     {
