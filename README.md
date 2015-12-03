@@ -39,7 +39,15 @@ I believe most of the application is self-explanatory so I will just highlight s
 	 - The source code for this dll is here: https://github.com/jsucupira/azure-blob-utilities
  - Unit Test
 	 - The unit test uses my Azure Storage Helper Mock classes
-	 - The Mock classes does all the processing in memory instead of communicating with Table Storage 
+	 - The Mock classes does all the processing in memory instead of communicating with Table Storage
+ -  Multi-Writes
+	 - Currently if you look at the class CustomerAtsRedundancyContext under DataAccess.CustomersAts you will see the implementation for writing to multiple places.  This is the flow:
+		 - First it write to the same data center table storage
+		 - Second it writes to a table called Archive.  This table contains all the transaction in order in case you need to reply those transactions
+		 - Third it sends a message to service bus for that record to be added to the other region's table storage
+	 - You may notice that there is a field called referenceId in the Model saved into table storage. The purpose of this field is to link a record between the archive table and that customer table
+		 - You may also notice that the original record doesn't have any value on the field referenceId, only records that were added via Service Bus
+> 
 
 
 > **Application Configuration Required:**
