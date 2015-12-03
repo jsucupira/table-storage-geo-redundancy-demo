@@ -4,6 +4,8 @@
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
       <Setting name="StorageAccount" />
+      <Setting name="StorageArchiveAccount" />
+      <Setting name="ServiceBus" />
     </ConfigurationSettings>
   </WorkerRole>
 </ServiceDefinition>

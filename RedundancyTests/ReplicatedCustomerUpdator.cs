@@ -34,7 +34,7 @@ namespace RedundancyTests
         [TestMethod]
         public void test_delete()
         {
-            Customer customer = CustomerUpdator.Save(new Customer
+            Customer customer = CustomerUpdator.Create(new Customer
             {
                 FirstName = "Jonathas",
                 Email = "jonathas@jsucupira.com",
@@ -49,7 +49,7 @@ namespace RedundancyTests
         {
             for (int i = 0; i < 10; i++)
             {
-                CustomerUpdator.Save(new Customer
+                CustomerUpdator.Create(new Customer
                 {
                     Email = i.ToString(),
                     FirstName = i.ToString(),
@@ -66,7 +66,7 @@ namespace RedundancyTests
         [ExpectedException(typeof(ApplicationException))]
         public void test_invalid_save()
         {
-            CustomerUpdator.Save(new Customer());
+            CustomerUpdator.Create(new Customer());
         }
     }
 }

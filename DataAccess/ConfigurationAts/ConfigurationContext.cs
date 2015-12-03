@@ -7,7 +7,7 @@ using Core.Extensibility;
 
 namespace DataAccess.ConfigurationAts
 {
-    [Export(typeof (IConfigurationContext))]
+    [Export(typeof(IConfigurationContext))]
     [PartCreationPolicy(CreationPolicy.Shared)]
     public class ConfigurationContext : IConfigurationContext
     {
@@ -35,7 +35,7 @@ namespace DataAccess.ConfigurationAts
 
         public void SaveItem(string key, string value)
         {
-            _azureTable.Upset<ConfigurationAts>(new ConfigurationAts {RowKey = key, Value = value});
+            _azureTable.Upset<ConfigurationAts>(new ConfigurationAts { RowKey = key, Value = value });
         }
     }
 }

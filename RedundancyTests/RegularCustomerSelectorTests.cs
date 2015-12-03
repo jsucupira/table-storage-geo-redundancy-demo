@@ -25,7 +25,7 @@ namespace RedundancyTests
         {
             for (int i = 0; i < 10; i++)
             {
-                CustomerUpdator.Save(new Customer
+                CustomerUpdator.Create(new Customer
                 {
                     FirstName = "Jonathas",
                     Email = "jonathas@jsucupira.com",
@@ -38,7 +38,7 @@ namespace RedundancyTests
         [TestMethod]
         public void test_get_single()
         {
-            Customer customer = CustomerUpdator.Save(new Customer
+            Customer customer = CustomerUpdator.Create(new Customer
             {
                 FirstName = "Jonathas",
                 Email = "jonathas@jsucupira.com",

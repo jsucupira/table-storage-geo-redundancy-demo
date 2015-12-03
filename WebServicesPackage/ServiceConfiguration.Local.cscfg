@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ServiceConfiguration serviceName="EastPackage" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2015-04.2.6">
-  <Role name="EastWorkerRole">
+<ServiceConfiguration serviceName="WebServicesPackage" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2015-04.2.6">
+  <Role name="WebServicesRole">
     <Instances count="1" />
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="StorageAccount" value="UseDevelopmentStorage=true" />
       <Setting name="StorageArchiveAccount" value="UseDevelopmentStorage=true" />
-      <Setting name="ServiceBus" value="UseDevelopmentStorage=true" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

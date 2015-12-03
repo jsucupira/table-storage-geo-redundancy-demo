@@ -22,7 +22,7 @@ namespace DataAccess.CustomersAts
             _customerContext = new CustomerAtsContext();
             _archiveContext = ArchiveContextFactory.Create("CustomerAtsArchiveContext");
             _serviceBusContext = MefBase.Resolve<IServiceBusContext>();
-            _serviceBusContext.ConnectionString = ConfigurationsSelector.GetSetting("ServiceBusConnection");
+            _serviceBusContext.ConnectionString = ConfigurationsSelector.GetSetting("RedundancyServiceBusConnection");
         }
 
         public bool Save(Customer customer)

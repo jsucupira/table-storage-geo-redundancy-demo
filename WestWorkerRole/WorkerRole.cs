@@ -4,10 +4,12 @@ using System.Net;
 using System.Threading;
 using Business;
 using Core.Configuration;
+using Microsoft.Azure;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Model.Archiver;
+using Services.BootStrapper;
 
 namespace WestWorkerRole
 {
@@ -23,15 +25,16 @@ namespace WestWorkerRole
             // Set the maximum number of concurrent connections 
             ServicePointManager.DefaultConnectionLimit = 12;
 
+            MefLoader.Initialize();
             // Create the queue if it does not exist already
-            string connectionString = ConfigurationsSelector.GetSetting("EastServiceBusConnection");
+            string connectionString = CloudConfigurationManager.GetSetting("ServiceBus");
             string queueName = ConfigurationsSelector.GetSetting("Customer.Queue");
             NamespaceManager namespaceManager = NamespaceManager.CreateFromConnectionString(connectionString);
             QueueDescription queueDescription = new QueueDescription(queueName)
             {
                 MaxSizeInMegabytes = 1024,
-                DefaultMessageTimeToLive = TimeSpan.FromDays(15),
-                EnablePartitioning = true,
+                DefaultMessageTimeToLive = TimeSpan.FromMinutes(10),
+                EnablePartitioning = false, //I want to ensure the messages will processed in the right order
                 EnableDeadLetteringOnMessageExpiration = true,
                 LockDuration = TimeSpan.FromMinutes(5)
             };

@@ -5,14 +5,13 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>2.7</ProductVersion>
-    <ProjectGuid>e9be35b3-58a5-4821-bb70-4616f6296462</ProjectGuid>
+    <ProjectGuid>ba3083e9-9fb5-4d4e-b313-d761c0c35df9</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EastPackage</RootNamespace>
-    <AssemblyName>EastPackage</AssemblyName>
+    <RootNamespace>WebServicesPackage</RootNamespace>
+    <AssemblyName>WebServicesPackage</AssemblyName>
     <StartDevelopmentStorage>True</StartDevelopmentStorage>
-    <Name>EastPackage</Name>
-    <UseWebProjectPorts>True</UseWebProjectPorts>
+    <Name>WebServicesPackage</Name>
     <PackageEnableRemoteDebugger>False</PackageEnableRemoteDebugger>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -39,24 +38,25 @@
     <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EastWorkerRole\EastWorkerRole.csproj">
-      <Name>EastWorkerRole</Name>
-      <Project>{837af47f-c9e6-4569-96b7-422aa2241051}</Project>
+    <ProjectReference Include="..\WebServicesRole\WebServicesRole.csproj">
+      <Name>WebServicesRole</Name>
+      <Project>{6dd86d3e-9c08-4e02-8888-a369631fa260}</Project>
       <Private>True</Private>
       <RoleType>Worker</RoleType>
-      <RoleName>EastWorkerRole</RoleName>
+      <RoleName>WebServicesRole</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="EastWorkerRoleContent\" />
     <Folder Include="Profiles" />
+    <Folder Include="WebServicesRoleContent\" />
   </ItemGroup>
   <ItemGroup>
-    <DiagnosticsConfiguration Include="EastWorkerRoleContent\diagnostics.wadcfgx" />
+    <DiagnosticsConfiguration Include="WebServicesRoleContent\diagnostics.wadcfgx" />
   </ItemGroup>
   <ItemGroup>
-    <PublishProfile Include="Profiles\table-redundancyProduction.azurePubxml" />
+    <PublishProfile Include="Profiles\table-redunancy-webservices-eastProduction.azurePubxml" />
+    <PublishProfile Include="Profiles\table-redunancy-webservices-westProduction.azurePubxml" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
