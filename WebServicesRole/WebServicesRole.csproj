@@ -125,6 +125,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControllerActionInvoker.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HealthController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -140,6 +141,10 @@
     <ProjectReference Include="..\Business\Business.csproj">
       <Project>{201b4b47-8db7-4a20-9cd0-6672f4bfb350}</Project>
       <Name>Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{7dfa80d8-c919-4eb0-a632-2f3f25d2e877}</Project>
+      <Name>Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{dd970bc3-97a7-455c-99b3-9ba2c735325e}</Project>

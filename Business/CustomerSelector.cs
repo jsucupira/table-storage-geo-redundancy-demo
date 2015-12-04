@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Core.Configuration;
+using Core.Exceptions;
 using Model.Customer;
 
 namespace Business
@@ -15,9 +16,13 @@ namespace Business
         public static Customer Get(string customerId)
         {
             if (string.IsNullOrEmpty(customerId))
-                throw new ApplicationException("Customer Id cannot be null");
+                throw new InvalidValueException(nameof(customerId), customerId);
 
-            return CustomerContextFactory.Create().Get(customerId);
+            var customer = CustomerContextFactory.Create().Get(customerId);
+            if (customer == null)
+                throw new NotFoundException("Customer");
+
+            return customer;
         }
     }
 }

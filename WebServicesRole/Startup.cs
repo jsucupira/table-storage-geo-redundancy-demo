@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Formatting;
 using System.Web.Http;
+using System.Web.Http.Controllers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Owin;
@@ -11,6 +12,7 @@ namespace WebServicesRole
         public void Configuration(IAppBuilder app)
         {
             HttpConfiguration config = new HttpConfiguration();
+            config.Services.Replace(typeof(IHttpActionInvoker), new ControllerActionInvoker());
             config.MapHttpAttributeRoutes();
             ConfigureApi(config);
             app.UseWebApi(config);

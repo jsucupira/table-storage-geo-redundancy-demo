@@ -52,6 +52,7 @@
     <Compile Include="Configuration\ConfigurationItem.cs" />
     <Compile Include="Configuration\ConfigurationsSelector.cs" />
     <Compile Include="Configuration\IConfigurationContext.cs" />
+    <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Extensibility\MefBase.cs" />
     <Compile Include="Extensibility\MefExportAttribute.cs" />
     <Compile Include="Extensibility\MefExtensionMethods.cs" />
