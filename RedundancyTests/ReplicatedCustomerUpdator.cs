@@ -26,7 +26,7 @@ namespace RedundancyTests
             archiveTable.TableName = "CustomerArchive";
             archiveTable.DeleteTable();
 
-            ConfigurationsSelector.SaveSetting("ServiceBusConnection", "Endpoint=sb://random.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=awdawdAWDAWDAWdwadad==");
+            ConfigurationsSelector.SaveSetting("RedundancyServiceBusConnection", "Endpoint=sb://random.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=awdawdAWDAWDAWdwadad==");
             ConfigurationsSelector.SaveSetting("Customer.Queue", "blah");
             ConfigurationsSelector.SaveSetting("Customer.DataAccess", "CustomerAtsRedundancyContext");
         }
@@ -58,7 +58,7 @@ namespace RedundancyTests
             }
 
             Assert.IsTrue(CustomerSelector.FindAll().Count == 10);
-            ITransactionLogContext customerArchiver = TransactionLogContextFactory.Create("CustomerAtsArchiveContext");
+            ITransactionLogContext customerArchiver = TransactionLogContextFactory.Create("CustomerAtsTransactionLogContext");
             Assert.IsTrue(customerArchiver.FindAll().Count == 10);
         }
 
