@@ -4,8 +4,8 @@ using Business;
 using Core.Configuration;
 using Core.Extensibility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Model.Archiver;
 using Model.Customer;
+using Model.Transaction;
 
 namespace RedundancyTests
 {
@@ -58,7 +58,7 @@ namespace RedundancyTests
             }
 
             Assert.IsTrue(CustomerSelector.FindAll().Count == 10);
-            IArchiveContext customerArchiver = ArchiveContextFactory.Create("CustomerAtsArchiveContext");
+            ITransactionLogContext customerArchiver = TransactionLogContextFactory.Create("CustomerAtsArchiveContext");
             Assert.IsTrue(customerArchiver.FindAll().Count == 10);
         }
 

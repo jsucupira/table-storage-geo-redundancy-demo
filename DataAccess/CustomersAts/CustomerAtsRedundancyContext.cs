@@ -3,8 +3,8 @@ using System.ComponentModel.Composition;
 using AzureUtilities.Service_Bus;
 using Core.Configuration;
 using Core.Extensibility;
-using Model.Archiver;
 using Model.Customer;
+using Model.Transaction;
 using Newtonsoft.Json;
 
 namespace DataAccess.CustomersAts
@@ -13,14 +13,14 @@ namespace DataAccess.CustomersAts
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class CustomerAtsRedundancyContext : ICustomerContext
     {
-        private readonly IArchiveContext _archiveContext;
+        private readonly ITransactionLogContext _transactionLogContext;
         private readonly ICustomerContext _customerContext;
         private readonly IServiceBusContext _serviceBusContext;
 
         public CustomerAtsRedundancyContext()
         {
             _customerContext = new CustomerAtsContext();
-            _archiveContext = ArchiveContextFactory.Create("CustomerAtsArchiveContext");
+            _transactionLogContext = TransactionLogContextFactory.Create("CustomerAtsTransactionLogContext");
             _serviceBusContext = MefBase.Resolve<IServiceBusContext>();
             _serviceBusContext.ConnectionString = ConfigurationsSelector.GetSetting("RedundancyServiceBusConnection");
         }
@@ -30,7 +30,7 @@ namespace DataAccess.CustomersAts
             bool result = _customerContext.Save(customer);
             if (result)
             {
-                Archive archivedMessage = _archiveContext.Save(new Archive
+                TransactionLog archivedMessage = _transactionLogContext.Save(new TransactionLog
                 {
                     Action = "Save",
                     Object = JsonConvert.SerializeObject(customer),
@@ -52,7 +52,7 @@ namespace DataAccess.CustomersAts
             bool result = _customerContext.Delete(customerId);
             if (result)
             {
-                Archive archivedMessage = _archiveContext.Save(new Archive
+                TransactionLog archivedMessage = _transactionLogContext.Save(new TransactionLog
                 {
                     Action = "Delete",
                     Object = JsonConvert.SerializeObject(customer),

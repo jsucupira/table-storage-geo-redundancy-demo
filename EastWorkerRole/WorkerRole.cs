@@ -12,7 +12,7 @@ using Microsoft.Azure;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.ServiceRuntime;
-using Model.Archiver;
+using Model.Transaction;
 using Services.BootStrapper;
 
 namespace EastWorkerRole
@@ -69,7 +69,7 @@ namespace EastWorkerRole
                 {
                     // Process the message
                     Trace.WriteLine("Processing Service Bus message: " + receivedMessage.MessageId.ToString());
-                    Archive message = receivedMessage.GetBody<Archive>();
+                    TransactionLog message = receivedMessage.GetBody<TransactionLog>();
                     if (message != null)
                     {
                         Action decideStrategy = ReplicationStrategy.Create(message);

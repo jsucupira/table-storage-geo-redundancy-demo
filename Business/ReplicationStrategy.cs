@@ -1,21 +1,21 @@
 ﻿using System;
-using Model.Archiver;
 using Model.Customer;
+using Model.Transaction;
 using Newtonsoft.Json;
 
 namespace Business
 {
     public static class ReplicationStrategy
     {
-        public static Action Create(Archive archiveMessage)
+        public static Action Create(TransactionLog transactionLogMessage)
         {
-            switch (archiveMessage.Type)
+            switch (transactionLogMessage.Type)
             {
                 case nameof(Customer):
                     ICustomerContext context = CustomerContextFactory.CreateSimple();
-                    Customer message = JsonConvert.DeserializeObject<Customer>(archiveMessage.Object);
-                    message.ReferenceId = archiveMessage.ArchiveId;
-                    string actionType = archiveMessage.Action;
+                    Customer message = JsonConvert.DeserializeObject<Customer>(transactionLogMessage.Object);
+                    message.ReferenceId = transactionLogMessage.TransactionId;
+                    string actionType = transactionLogMessage.Action;
                     if (actionType.Equals("save", StringComparison.OrdinalIgnoreCase))
                         return () => context.Save(message);
                     if (actionType.Equals("delete", StringComparison.OrdinalIgnoreCase))

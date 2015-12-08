@@ -1,5 +1,5 @@
 ﻿using System;
-using Model.Archiver;
+using Model.Transaction;
 
 namespace Model.Customer
 {

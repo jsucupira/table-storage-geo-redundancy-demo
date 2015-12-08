@@ -86,12 +86,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArchiverAts\ArchiveExtensions.cs" />
+    <Compile Include="TransactionAts\TransactionLogExtensions.cs" />
     <Compile Include="ConfigurationAts\ConfigurationAts.cs" />
     <Compile Include="ConfigurationAts\ConfigurationContext.cs" />
     <Compile Include="ConfigurationAts\ConfigurationExtensions.cs" />
-    <Compile Include="ArchiverAts\ArchiveAtsEntity.cs" />
-    <Compile Include="CustomersAts\CustomerAtsArchiveContext.cs" />
+    <Compile Include="TransactionAts\TransactionLogAtsEntity.cs" />
+    <Compile Include="CustomersAts\CustomerAtsTransactionLogContext.cs" />
     <Compile Include="CustomersAts\CustomerAtsContext.cs" />
     <Compile Include="CustomersAts\CustomerAtsEntity.cs" />
     <Compile Include="CustomersAts\CustomerAtsRedundancyContext.cs" />

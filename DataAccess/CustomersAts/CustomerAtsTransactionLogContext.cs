@@ -4,34 +4,34 @@ using System.Linq;
 using AzureUtilities.Tables;
 using Core.Configuration;
 using Core.Extensibility;
-using DataAccess.ArchiverAts;
-using Model.Archiver;
+using DataAccess.TransactionAts;
+using Model.Transaction;
 
 namespace DataAccess.CustomersAts
 {
-    [MefExport(typeof (IArchiveContext), "CustomerAtsArchiveContext")]
+    [MefExport(typeof (ITransactionLogContext), "CustomerAtsTransactionLogContext")]
     [PartCreationPolicy(CreationPolicy.NonShared)]
-    internal class CustomerAtsArchiveContext : IArchiveContext
+    internal class CustomerAtsTransactionLogContext : ITransactionLogContext
     {
         private const string PARTITION_KEY = "Customer";
         private readonly IAzureTableUtility _azureTable;
 
-        public CustomerAtsArchiveContext()
+        public CustomerAtsTransactionLogContext()
         {
             _azureTable = MefBase.Resolve<IAzureTableUtility>();
             _azureTable.ConnectionString = ConfigurationsSelector.GetLocalConnectionString("StorageArchiveAccount");
-            _azureTable.TableName = "CustomerArchive";
+            _azureTable.TableName = "TransactionLog";
             _azureTable.CreateTable();
         }
 
-        public List<Archive> FindAll()
+        public List<TransactionLog> FindAll()
         {
-            return _azureTable.FindByPartitionKey<ArchiveAtsEntity>(PARTITION_KEY).Select(ArchiveExtensions.Map).ToList();
+            return _azureTable.FindByPartitionKey<TransactionLogAtsEntity>(PARTITION_KEY).Select(TransactionLogExtensions.Map).ToList();
         }
 
-        public Archive Save(Archive archive)
+        public TransactionLog Save(TransactionLog transactionLog)
         {
-            ArchiveAtsEntity atsEntity = archive.Map();
+            TransactionLogAtsEntity atsEntity = transactionLog.Map();
             _azureTable.Insert(atsEntity);
             return atsEntity.Map();
         }

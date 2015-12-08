@@ -4,8 +4,8 @@ using Business;
 using Core.Configuration;
 using Core.Extensibility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Model.Archiver;
 using Model.Customer;
+using Model.Transaction;
 using Newtonsoft.Json;
 
 namespace RedundancyTests
@@ -32,7 +32,7 @@ namespace RedundancyTests
         [TestMethod]
         public void test_strategy()
         {
-            IArchiveContext archiveContext = ArchiveContextFactory.Create("CustomerAtsArchiveContext");
+            ITransactionLogContext transactionLogContext = TransactionLogContextFactory.Create("CustomerAtsTransactionLogContext");
             for (int i = 0; i < 5; i++)
             {
                 Customer customer = new Customer
@@ -42,7 +42,7 @@ namespace RedundancyTests
                     Email = "jonathas@jsucupira.com",
                     LastName = "Sucupira"
                 };
-                archiveContext.Save(new Archive
+                transactionLogContext.Save(new TransactionLog
                 {
                     Action = "Save",
                     Object = JsonConvert.SerializeObject(customer),
@@ -50,7 +50,7 @@ namespace RedundancyTests
                 });
             }
 
-            foreach (Archive item in archiveContext.FindAll())
+            foreach (TransactionLog item in transactionLogContext.FindAll())
             {
                 Action action = ReplicationStrategy.Create(item);
                 action();

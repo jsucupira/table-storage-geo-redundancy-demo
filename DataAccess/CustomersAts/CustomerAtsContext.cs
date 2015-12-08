@@ -6,7 +6,6 @@ using AzureUtilities.Tables;
 using Core.Configuration;
 using Core.Extensibility;
 using Microsoft.WindowsAzure.Storage.Table;
-using Model.Archiver;
 using Model.Customer;
 
 namespace DataAccess.CustomersAts

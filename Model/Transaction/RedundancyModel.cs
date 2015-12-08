@@ -1,4 +1,4 @@
-﻿namespace Model.Archiver
+﻿namespace Model.Transaction
 {
     public class RedundancyModel
     {
