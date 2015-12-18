@@ -1,9 +1,7 @@
 Azure Table Storage Multi-Region
 ===========================
 
-
-The purpose of this application is for me to come up with a pattern to do multi-region writes to table storage in case of a fail-over scenario.
-In theory this would make the application resilient in case an Azure data center went down.
+The purpose of this application is for me to come up with a pattern to do multi-region writes to table storage in case of a fail-over scenario. In theory, this would make the application resilient in case an Azure data center went down.
 
 ----------
 
@@ -26,9 +24,9 @@ The following are the required infrastructure in order to make this implementati
 
 Application Layout
 ----------------------
-I believe most of the application is self-explanatory so I will just highlight some small things.
+I believe most of the application is self-explanatory, so I will just highlight some small things.
 
- - All application configurations are stored inside a table in Table Storage.
+ - All application configurations are stored inside a table in Table Storage
 	 - The table is called Configuration
 	 - You can find the implementation inside Core.Configuration namespace
  - Dependency Injection
@@ -41,13 +39,12 @@ I believe most of the application is self-explanatory so I will just highlight s
 	 - The unit test uses my Azure Storage Helper Mock classes
 	 - The Mock classes does all the processing in memory instead of communicating with Table Storage
  -  Multi-Writes
-	 - Currently if you look at the class CustomerAtsRedundancyContext under DataAccess.CustomersAts you will see the implementation for writing to multiple places.  This is the flow:
-		 - First it write to the same data center table storage
-		 - Second it writes to a table called Archive.  This table contains all the transaction in order in case you need to reply those transactions
-		 - Third it sends a message to service bus for that record to be added to the other region's table storage
-	 - You may notice that there is a field called referenceId in the Model saved into table storage. The purpose of this field is to link a record between the archive table and that customer table
-		 - You may also notice that the original record doesn't have any value on the field referenceId, only records that were added via Service Bus
-> 
+	 - Currently, if you look at the class CustomerAtsRedundancyContext under DataAccess.CustomersAts, you will see the implementation for writing to multiple places. This is the flow:
+		 - First, it writes to the same data center table storage
+		 - Second, it writes to a table called Archive. This table contains all of the transactions in order in case you need to reply to those transactions
+		 - Third, it sends a message to service bus for that record to be added to the other region's table storage
+	 - You may notice that there is a field called referenceId in the Model saved into table storage. The purpose of this field is to link a record between the archive table and the customer table
+		 - You may also notice that the original record doesn't have any value on the field referenceId, only records that were added via Service Bus 
 
 
 > **Application Configuration Required:**
