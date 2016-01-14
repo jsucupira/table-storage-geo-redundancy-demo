@@ -195,7 +195,11 @@ FakesAssemblies/
 # Visual Studio 6 workspace options file
 *.opt
 
+
 #don't ignore
 !packages/AzureUtilities*
 !packages/AzureUtilities.Mock*
 !packages/Azure.TableStorage.Redundancy*
+!packages/AzureUtilities.Mock*/*.nupkg
+!packages/AzureUtilities*/*.nupkg
+!packages/Azure.TableStorage.Redundancy*/*.nupkg

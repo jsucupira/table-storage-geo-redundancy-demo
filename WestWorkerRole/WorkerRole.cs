@@ -1,11 +1,14 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using Azure.TableStorage.Redundancy;
 using Core.Configuration;
+using DataAccess.CustomersAts;
 using Microsoft.Azure;
 using Microsoft.ServiceBus;
+using Microsoft.ServiceBus.Management;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Services.BootStrapper;
@@ -67,9 +70,10 @@ namespace WestWorkerRole
                     // Process the message
                     Trace.WriteLine("Processing Service Bus message: " + receivedMessage.MessageId.ToString());
                     TransactionLog message = receivedMessage.GetBody<TransactionLog>();
+
                     if (message != null)
                     {
-                        Action decideStrategy = ReplicationStrategy.Create(message);
+                        Action decideStrategy = message.Create(ConfigurationsSelector.GetLocalConnectionString("StorageAccount"));
                         decideStrategy?.Invoke();
                         receivedMessage.Complete();
                     }

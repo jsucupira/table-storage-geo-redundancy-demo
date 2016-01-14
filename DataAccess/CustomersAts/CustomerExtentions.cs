@@ -14,7 +14,6 @@ namespace DataAccess.CustomersAts
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 PhoneNumber = model.PhoneNumber,
-                ReferenceId = model.ReferenceId
             };
         }
 
@@ -28,7 +27,6 @@ namespace DataAccess.CustomersAts
                 FirstName = entity.FirstName,
                 LastName = entity.LastName,
                 PhoneNumber = entity.PhoneNumber,
-                ReferenceId = entity.ReferenceId
             };
         }
     }

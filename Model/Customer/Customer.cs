@@ -11,6 +11,5 @@ namespace Model.Customer
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
         //if this value is null in the table means that it was added in the primary region
-        public string ReferenceId { get; set; }
     }
 }

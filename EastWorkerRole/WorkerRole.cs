@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading;
 using Azure.TableStorage.Redundancy;
 using Core.Configuration;
+using DataAccess.CustomersAts;
 using Microsoft.Azure;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
@@ -68,7 +69,7 @@ namespace EastWorkerRole
                     TransactionLog message = receivedMessage.GetBody<TransactionLog>();
                     if (message != null)
                     {
-                        Action decideStrategy = ReplicationStrategy.Create(message);
+                        Action decideStrategy = message.Create(ConfigurationsSelector.GetLocalConnectionString("StorageAccount"));
                         decideStrategy?.Invoke();
                         receivedMessage.Complete();
                     }
