@@ -1,7 +1,7 @@
 Azure Table Storage Multi-Region
 ===========================
 
-The purpose of this application is for me to come up with a pattern to do multi-region writes to table storage in case of a fail-over scenario. In theory, this would make the application resilient in case an Azure data center went down.
+The purpose of this application is to demostrate the usage of the library https://github.com/jsucupira/table-storage-geo-redundancy.
 
 ----------
 
@@ -9,18 +9,17 @@ Infrastructure
 ----------------
 The following are the required infrastructure in order to make this implementation work:
 
- - Cloud Services
-	 - One for east data center REST services
-	 - One for west data center REST services
-	 - One for east data center Service Bus worker role
-	 - One for west data center Service Bus worker role
+ - 4 Cloud Services
+	 - One cloud services in the east data center to host the REST services
+	 - One cloud services in the west data center to host the REST services
+	 - One cloud services in the east data center to host the Service Bus worker role
+	 - One cloud services in the west data center to host the Service Bus worker role
  - Traffic Manager
-	 - This will be setup in fail-over mode
-	 - This coordinates traffic between the REST services
+	 - The traffic manager will coordinate the traffic between the REST services
+	 - The traffic manager will be setup in a fail-over mode
  - Storage Accounts
-	 - One for east
-	 - One for west
-
+	 - One storage in east
+	 - One storage in west
 
 Application Layout
 ----------------------
@@ -39,17 +38,13 @@ I believe most of the application is self-explanatory, so I will just highlight 
 	 - The unit test uses my Azure Storage Helper Mock classes
 	 - The Mock classes does all the processing in memory instead of communicating with Table Storage
  -  Multi-Writes
-	 - Currently, if you look at the class CustomerAtsRedundancyContext under DataAccess.CustomersAts, you will see the implementation for writing to multiple places. This is the flow:
+	 - Currently I am using the library Azure.TableStorage.Redundancy to abstract the multi-write. This is the flow it follows:
 		 - First, it writes to the same data center table storage
-		 - Second, it writes to a table called Archive. This table contains all of the transactions in order in case you need to reply to those transactions
+		 - Second, it writes to a table called TransactionLog. This table contains all of the transactions in order in case you need to reply to those transactions
 		 - Third, it sends a message to service bus for that record to be added to the other region's table storage
-	 - You may notice that there is a field called referenceId in the Model saved into table storage. The purpose of this field is to link a record between the archive table and the customer table
-		 - You may also notice that the original record doesn't have any value on the field referenceId, only records that were added via Service Bus 
-
 
 > **Application Configuration Required:**
 <i>The following configurations are required in order for the application to work</i>
 > - Customer.Queue
 > - ServiceBusConnection
-> - Customer.DataAccess (It has a default)
-> - RedundancyServiceBusConnection
+> - RedundancyServiceBusConnection (the value will be the secondary(other's region) service bus connection string)
