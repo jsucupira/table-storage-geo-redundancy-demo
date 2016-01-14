@@ -2,14 +2,14 @@
 using System.Diagnostics;
 using System.Net;
 using System.Threading;
-using Business;
+using Azure.TableStorage.Redundancy;
 using Core.Configuration;
 using Microsoft.Azure;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.ServiceRuntime;
-using Model.Transaction;
 using Services.BootStrapper;
+using Shared;
 
 namespace WestWorkerRole
 {

@@ -41,13 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Transaction\TransactionLog.cs" />
-    <Compile Include="Transaction\TransactionLogContextFactory.cs" />
-    <Compile Include="Transaction\ITransactionLogContext.cs" />
     <Compile Include="Customer\Customer.cs" />
     <Compile Include="Customer\CustomerContextFactory.cs" />
     <Compile Include="Customer\ICustomerContext.cs" />
-    <Compile Include="Transaction\RedundancyModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

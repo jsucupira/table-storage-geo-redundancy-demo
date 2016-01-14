@@ -5,7 +5,6 @@ using Core.Configuration;
 using Core.Extensibility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model.Customer;
-using Model.Transaction;
 
 namespace RedundancyTests
 {
@@ -45,6 +44,13 @@ namespace RedundancyTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof (ApplicationException))]
+        public void test_invalid_save()
+        {
+            CustomerUpdator.Create(new Customer());
+        }
+
+        [TestMethod]
         public void test_save()
         {
             for (int i = 0; i < 10; i++)
@@ -58,15 +64,6 @@ namespace RedundancyTests
             }
 
             Assert.IsTrue(CustomerSelector.FindAll().Count == 10);
-            ITransactionLogContext customerArchiver = TransactionLogContextFactory.Create("CustomerAtsTransactionLogContext");
-            Assert.IsTrue(customerArchiver.FindAll().Count == 10);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ApplicationException))]
-        public void test_invalid_save()
-        {
-            CustomerUpdator.Create(new Customer());
         }
     }
 }

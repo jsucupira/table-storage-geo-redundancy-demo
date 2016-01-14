@@ -1,9 +1,10 @@
 ﻿using System;
+using Azure.TableStorage.Redundancy;
+using DataAccess.CustomersAts;
 using Model.Customer;
-using Model.Transaction;
 using Newtonsoft.Json;
 
-namespace Business
+namespace Shared
 {
     public static class ReplicationStrategy
     {
@@ -11,12 +12,12 @@ namespace Business
         {
             switch (transactionLogMessage.Type)
             {
-                case nameof(Customer):
+                case nameof(CustomerAtsEntity):
                     ICustomerContext context = CustomerContextFactory.CreateSimple();
-                    Customer message = JsonConvert.DeserializeObject<Customer>(transactionLogMessage.Object);
+                    var message = JsonConvert.DeserializeObject<CustomerAtsEntity>(transactionLogMessage.Object).Map();
                     message.ReferenceId = transactionLogMessage.TransactionId;
                     string actionType = transactionLogMessage.Action;
-                    if (actionType.Equals("save", StringComparison.OrdinalIgnoreCase))
+                    if (actionType.Equals("UPSERT", StringComparison.OrdinalIgnoreCase) || actionType.Equals("INSERT", StringComparison.OrdinalIgnoreCase))
                         return () => context.Save(message);
                     if (actionType.Equals("delete", StringComparison.OrdinalIgnoreCase))
                         return () => context.Delete(message.CustomerId);

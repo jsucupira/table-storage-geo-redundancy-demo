@@ -7,13 +7,14 @@ namespace Model.Customer
     {
         public static ICustomerContext Create()
         {
-            string className = ConfigurationsSelector.GetSetting("Customer.DataAccess", "CustomerAtsContext");
-            return MefBase.Resolve<ICustomerContext>(className);
+            var context = MefBase.Resolve<ICustomerContext>();
+            context.Redundant();
+            return context;
         }
 
         public static ICustomerContext CreateSimple()
         {
-            return MefBase.Resolve<ICustomerContext>("CustomerAtsContext");
+            return MefBase.Resolve<ICustomerContext>();
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{DD970BC3-97A7-455C-99B3-9BA2C735325E}"
 EndProject
@@ -43,6 +43,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.0 - Data", "2.0 - Data", "{AA2AC841-3032-47BC-B9C2-8CD1635C8473}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.0 - Tests", "4.0 - Tests", "{D4D772B4-ADFD-4498-B4C1-2A26B232C5FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{27A8CA1E-BDBB-4649-AF98-4208048B9C8E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -98,6 +100,10 @@ Global
 		{911D5A80-34B5-4C09-966B-D1926702CB14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{911D5A80-34B5-4C09-966B-D1926702CB14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{911D5A80-34B5-4C09-966B-D1926702CB14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27A8CA1E-BDBB-4649-AF98-4208048B9C8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27A8CA1E-BDBB-4649-AF98-4208048B9C8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27A8CA1E-BDBB-4649-AF98-4208048B9C8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27A8CA1E-BDBB-4649-AF98-4208048B9C8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -116,5 +122,6 @@ Global
 		{BA3083E9-9FB5-4D4E-B313-D761C0C35DF9} = {3BC2819C-1FC9-48B1-B392-0131921B560E}
 		{6DD86D3E-9C08-4E02-8888-A369631FA260} = {175B7352-B4C9-46C2-B4ED-24567C32FCDB}
 		{911D5A80-34B5-4C09-966B-D1926702CB14} = {61A047C6-D1B9-4079-9A60-184B86810194}
+		{27A8CA1E-BDBB-4649-AF98-4208048B9C8E} = {175B7352-B4C9-46C2-B4ED-24567C32FCDB}
 	EndGlobalSection
 EndGlobal

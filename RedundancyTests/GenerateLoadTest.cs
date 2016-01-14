@@ -16,7 +16,7 @@ namespace RedundancyTests
         private const string SERVICE_URL = "http://xxx.trafficmanager.net/"; // Traffic Manager
         private const string EAST_SERVICE_URL = "http://xxx-east.cloudapp.net/"; //EAST
         private const string WEST_SERVICE_URL = "http://xxx-west.cloudapp.net/"; //WEST
-        private const int TOTAL_RECORDS = 500;
+        private const int TOTAL_RECORDS = 100;
         private const double SECONDS_TO_WAIT = 0.1;
 
         [TestMethod]

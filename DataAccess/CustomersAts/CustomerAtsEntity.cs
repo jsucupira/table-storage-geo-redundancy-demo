@@ -4,7 +4,7 @@ using Microsoft.WindowsAzure.Storage.Table;
 namespace DataAccess.CustomersAts
 {
     [Serializable]
-    internal class CustomerAtsEntity : TableEntity
+    public class CustomerAtsEntity : TableEntity
     {
         public CustomerAtsEntity()
         {

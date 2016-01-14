@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
-using System.Net;
-using AzureUtilities.Tables;
+using Azure.TableStorage.Redundancy;
 using Core.Configuration;
 using Core.Extensibility;
-using Microsoft.WindowsAzure.Storage.Table;
 using Model.Customer;
 
 namespace DataAccess.CustomersAts
@@ -15,36 +13,47 @@ namespace DataAccess.CustomersAts
     internal class CustomerAtsContext : ICustomerContext
     {
         internal const string PARTITION_KEY = "Customer";
-        private readonly IAzureTableUtility _azureTable;
-
-        public CustomerAtsContext()
+        private RedundantTableStorage<CustomerAtsEntity> _privateTable; 
+        private RedundantTableStorage<CustomerAtsEntity> _azureTable
         {
-            _azureTable = MefBase.Resolve<IAzureTableUtility>();
-            _azureTable.ConnectionString = ConfigurationsSelector.GetLocalConnectionString("StorageAccount");
-            _azureTable.TableName = "Customer";
-            _azureTable.CreateTable();
+            get
+            {
+                if (_privateTable == null)
+                {
+                    string storageAccount = ConfigurationsSelector.GetLocalConnectionString("StorageAccount");
+                    string serviceBus = ConfigurationsSelector.GetSetting("RedundancyServiceBusConnection");
+                    string serviceBusQueue = ConfigurationsSelector.GetSetting("Customer.Queue");
+                    string archiveStorage = ConfigurationsSelector.GetLocalConnectionString("StorageArchiveAccount");
+                    _privateTable = new RedundantTableStorage<CustomerAtsEntity>(storageAccount, "Customer", _redundant, serviceBus, serviceBusQueue, archiveStorage);
+                }
+                return _privateTable;
+            }
         }
+        private bool _redundant;
 
-        public bool Save(Customer customer)
+        public void Save(Customer customer)
         {
-            TableResult result = _azureTable.Upset<CustomerAtsEntity>(customer.Map());
-            return result.HttpStatusCode == (int) HttpStatusCode.NoContent;
+            _azureTable.Upsert(customer.Map());
         }
 
         public Customer Get(string customerId)
         {
-            return _azureTable.FindBy<CustomerAtsEntity>(PARTITION_KEY, customerId).Map();
+            return _azureTable.FindBy(PARTITION_KEY, customerId).Map();
         }
 
-        public bool Delete(string customerId)
+        public void Delete(string customerId)
         {
-            _azureTable.DeleteEntity(PARTITION_KEY, customerId);
-            return true;
+            _azureTable.Delete(PARTITION_KEY, customerId);
         }
 
         public List<Customer> FindAll()
         {
-            return _azureTable.FindByPartitionKey<CustomerAtsEntity>(PARTITION_KEY).Select(CustomerExtentions.Map).ToList();
+            return _azureTable.FindByPartitionKey(PARTITION_KEY).Select(CustomerExtentions.Map).ToList();
+        }
+
+        public void Redundant()
+        {
+            _redundant = true;
         }
     }
 }

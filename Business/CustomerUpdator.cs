@@ -30,9 +30,7 @@ namespace Business
 
             customer.CustomerId = Guid.NewGuid().ToString();
 
-            bool result = CustomerContextFactory.Create().Save(customer);
-            if (!result)
-                throw new ApplicationException("Unable to save the customer");
+            CustomerContextFactory.Create().Save(customer);
 
             return customer;
         }
@@ -58,9 +56,7 @@ namespace Business
 
             customer.CustomerId = customerId;
 
-            bool result = CustomerContextFactory.Create().Save(customer);
-            if (!result)
-                throw new ApplicationException("Unable to save the customer");
+            CustomerContextFactory.Create().Save(customer);
 
             return customer;
         }

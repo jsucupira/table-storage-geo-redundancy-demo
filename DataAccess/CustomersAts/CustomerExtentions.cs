@@ -2,7 +2,7 @@
 
 namespace DataAccess.CustomersAts
 {
-    internal static class CustomerExtentions
+    public static class CustomerExtentions
     {
         public static CustomerAtsEntity Map(this Customer model)
         {

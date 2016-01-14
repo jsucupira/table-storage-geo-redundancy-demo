@@ -1,19 +1,15 @@
 ﻿using System;
-using System.ComponentModel.Composition.Hosting;
 using System.Diagnostics;
 using System.Net;
 using System.Threading;
-using AzureUtilities;
-using Business;
+using Azure.TableStorage.Redundancy;
 using Core.Configuration;
-using Core.Extensibility;
-using DataAccess;
 using Microsoft.Azure;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.ServiceRuntime;
-using Model.Transaction;
 using Services.BootStrapper;
+using Shared;
 
 namespace EastWorkerRole
 {
