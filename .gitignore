@@ -197,9 +197,7 @@ FakesAssemblies/
 
 
 #don't ignore
-!packages/AzureUtilities*
-!packages/AzureUtilities.Mock*
+!packages/Azure.TableStorage.Utilities*
 !packages/Azure.TableStorage.Redundancy*
-!packages/AzureUtilities.Mock*/*.nupkg
-!packages/AzureUtilities*/*.nupkg
+!packages/Azure.TableStorage.Utilities*/*.nupkg
 !packages/Azure.TableStorage.Redundancy*/*.nupkg

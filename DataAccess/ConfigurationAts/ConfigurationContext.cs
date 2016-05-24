@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
-using AzureUtilities.Tables;
+using Azure.TableStorage.Utilities.Tables;
 using Core.Configuration;
 using Core.Extensibility;
 

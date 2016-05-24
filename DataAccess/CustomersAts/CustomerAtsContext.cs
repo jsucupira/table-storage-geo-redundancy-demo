@@ -48,7 +48,7 @@ namespace DataAccess.CustomersAts
 
         public List<Customer> FindAll()
         {
-            return _azureTable.FindByPartitionKey(PARTITION_KEY).Select(CustomerExtentions.Map).ToList();
+            return _azureTable.FindByPartitionKey(PARTITION_KEY).Select(CustomerExtensions.Map).ToList();
         }
 
         public void Redundant()

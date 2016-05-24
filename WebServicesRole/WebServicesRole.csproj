@@ -77,7 +77,7 @@
       <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.1.0\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+    <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
@@ -147,7 +147,7 @@
       <Name>Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
-      <Project>{dd970bc3-97a7-455c-99b3-9ba2c735325e}</Project>
+      <Project>{DD970BC3-97A7-455C-99B3-9BA2C735325E}</Project>
       <Name>Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\Services.BootStrapper\Services.BootStrapper.csproj">

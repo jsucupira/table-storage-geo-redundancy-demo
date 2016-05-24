@@ -10,7 +10,6 @@ using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Services.BootStrapper;
-using Shared;
 
 namespace EastWorkerRole
 {
