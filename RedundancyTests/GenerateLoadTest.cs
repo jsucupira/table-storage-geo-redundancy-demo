@@ -72,7 +72,6 @@ namespace RedundancyTests
 
         [TestMethod]
         [TestCategory("Load")]
-        [Ignore]
         public void CreateNewUsersAndRetrieveInAnotherRegionTest()
         {
             int successCount = 0;
